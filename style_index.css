@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #f4f6f8;
+    color: #222;
+}
+
+
+/* HEADER */
+
+header {
+    background: #111827;
+    color: white;
+
+    padding: 20px 8%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+.usuario {
+    color: #d1d5db;
+    font-size: 14px;
+}
+
+
+/* MAIN */
+
+main {
+    width: 90%;
+    max-width: 900px;
+
+    margin: 40px auto;
+}
+
+
+/* TOPO */
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.topo h2 {
+    font-size: 28px;
+}
+
+.topo p {
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+
+/* BOTÃO NOVA */
+
+.btn-nova {
+    background: #2563eb;
+    color: white;
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+.btn-nova:hover {
+    background: #1d4ed8;
+}
+
+
+/* LISTA */
+
+.tarefas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* TAREFA */
+
+.tarefa {
+    background: white;
+
+    padding: 18px 20px;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.tarefa-info {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.tarefa input {
+    width: 18px;
+    height: 18px;
+
+    cursor: pointer;
+}
+
+.tarefa h3 {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.tarefa p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+
+/* CONCLUÍDA */
+
+.concluida h3 {
+    text-decoration: line-through;
+    color: #9ca3af;
+}
+
+
+/* AÇÕES */
+
+.acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    border: none;
+
+    padding: 8px 12px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.editar {
+    background: #e5e7eb;
+}
+
+.excluir {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+
+/* LISTA VAZIA */
+
+.vazio {
+    background: white;
+
+    padding: 50px;
+
+    text-align: center;
+
+    border-radius: 10px;
+
+    color: #6b7280;
+}
+
+
+/* MODAL */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.ativo {
+    display: flex;
+}
+
+.modal-box {
+    background: white;
+
+    width: 90%;
+    max-width: 450px;
+
+    padding: 30px;
+
+    border-radius: 12px;
+}
+
+.modal-box h2 {
+    margin-bottom: 20px;
+}
+
+
+/* CAMPOS */
+
+.campo {
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+}
+
+.campo input,
+.campo textarea {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    font-size: 15px;
+}
+
+.campo textarea {
+    resize: vertical;
+
+    min-height: 90px;
+}
+
+
+/* BOTÕES DO MODAL */
+
+.modal-acoes {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.cancelar {
+    background: #e5e7eb;
+}
+
+.salvar {
+    background: #2563eb;
+    color: white;
+}

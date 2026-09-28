@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS usuarios;
+
+USE usuarios;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+
+id INT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(150) NOT NULL UNIQUE,
+senha TEXT NOT NULL
+
+);
+
+USE usuarios;
+
+SELECT * FROM usuarios;
+
+CREATE TABLE IF NOT EXISTS tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo TEXT NOT NULL,
+    descricao TEXT NOT NULL,
+    id_user INT NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES usuarios(id)
+);
+
+SELECT * FROM tarefas;
+

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Minhas Tarefas</title>
+
+    <link rel="stylesheet" href="./style_index.css">
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Minhas Tarefas</h1>
+
+        <div class="usuario">
+            <p id="ola"></p>
+            <button class="btn excluir" onclick="sair()">Sair</button>
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <div class="topo">
+
+            <div>
+                <h2>Minhas tarefas</h2>
+                <p>Organize suas atividades</p>
+            </div>
+
+            <button class="btn-nova" onclick="abrirModal()">
+                + Nova tarefa
+            </button>
+
+        </div>
+
+        <div class="tarefas" id="listaTarefas">
+
+            <div class="vazio" id="mensagemVazia">
+                Nenhuma tarefa cadastrada.
+            </div>
+
+        </div>
+
+    </main>
+
+    <div class="modal" id="modal">
+
+        <div class="modal-box">
+
+            <h2 id="tituloModal">Nova tarefa</h2>
+
+            <div class="campo">
+
+                <label for="titulo">
+                    Título
+                </label>
+
+                <input
+                    type="text"
+                    id="titulo"
+                    placeholder="Ex: Estudar Java">
+
+            </div>
+
+
+            <div class="campo">
+
+                <label for="descricao">
+                    Descrição
+                </label>
+
+                <textarea
+                    id="descricao"
+                    placeholder="Descreva sua tarefa..."></textarea>
+
+            </div>
+
+
+            <div class="modal-acoes">
+
+                <button
+                    class="btn cancelar"
+                    onclick="fecharModal()">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    class="btn salvar"
+                    onclick="salvarTarefa()">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+    const modal = document.getElementById("modal");
+
+    const tituloInput = document.getElementById("titulo");
+
+    const descricaoInput = document.getElementById("descricao");
+
+    const listaTarefas = document.getElementById("listaTarefas");
+
+    const tituloModal = document.getElementById("tituloModal");
+
+    const mensagemVazia = document.getElementById("mensagemVazia");
+
+    let tarefaEditando = null;
+
+    function abrirModal() {
+
+        tarefaEditando = null;
+
+        tituloModal.textContent = "Nova tarefa";
+
+        tituloInput.value = "";
+
+        descricaoInput.value = "";
+
+        modal.classList.add("ativo");
+
+    }
+
+    function abrirModalEdicao(elemento) {
+
+        tarefaEditando = elemento;
+
+        const titulo = elemento.querySelector("h3").textContent;
+
+        const descricao = elemento.querySelector("p").textContent;
+
+        tituloModal.textContent = "Editar tarefa";
+
+        tituloInput.value = titulo;
+
+        descricaoInput.value = descricao;
+
+        modal.classList.add("ativo");
+
+    }
+
+    function fecharModal() {
+
+        modal.classList.remove("ativo");
+
+        tituloInput.value = "";
+
+        descricaoInput.value = "";
+
+        tarefaEditando = null;
+
+    }
+
+    function pegarDadosFormulario() {
+
+        return {
+
+            titulo: tituloInput.value.trim(),
+
+            descricao: descricaoInput.value.trim()
+
+        };
+
+    }
+
+    function adicionarTarefaNaTela(tarefa) {
+
+        const elemento = document.createElement("div");
+
+        elemento.classList.add("tarefa");
+
+        elemento.dataset.id = tarefa.id;
+
+
+        elemento.innerHTML = `
+
+            <div class="tarefa-info">
+
+                <input
+                    type="checkbox"
+                    onchange="alterarStatus(this)">
+
+                <div>
+
+                    <h3>${tarefa.titulo}</h3>
+
+                    <p>${tarefa.descricao}</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="acoes">
+
+                <button
+                    class="btn editar"
+                    onclick="abrirModalEdicao(
+                        this.closest('.tarefa')
+                    )">
+
+                    Editar
+
+                </button>
+
+
+                <button
+                    class="btn excluir"
+                    onclick="deletarTarefas(this.closest('.tarefa'))">
+
+                    Excluir
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        listaTarefas.appendChild(elemento);
+
+        atualizarMensagemVazia();
+
+    }
+
+    function atualizarTarefaNaTela(tarefa) {
+
+        const elemento = document.querySelector(
+            `.tarefa[data-id="${tarefa.id}"]`
+        );
+
+
+        if (!elemento) {
+            return;
+        }
+
+
+        elemento.querySelector("h3").textContent = tarefa.titulo;
+
+        elemento.querySelector("p").textContent = tarefa.descricao;
+
+
+        fecharModal();
+
+    }
+
+    function removerTarefaDaTela(id) {
+
+        const elemento = document.querySelector(
+            `.tarefa[data-id="${id}"]`
+        );
+
+
+        if (!elemento) {
+            return;
+        }
+
+
+        elemento.remove();
+
+        atualizarMensagemVazia();
+
+    }
+
+    function editarTarefa(elemento) {
+
+        abrirModalEdicao(elemento);
+
+    }
+
+    function pegarTarefaEditando() {
+
+        if (tarefaEditando === null) {
+
+            return null;
+
+        }
+
+
+        return {
+
+            id: tarefaEditando.dataset.id,
+
+            titulo: tituloInput.value.trim(),
+
+            descricao: descricaoInput.value.trim()
+
+        };
+
+    }
+
+    function solicitarExclusao(elemento) {
+
+        const id = elemento.dataset.id;
+
+        console.log("Tarefa que será excluída:", id);
+
+        deletarTarefas(id)
+
+    }
+
+
+    function alterarStatus(checkbox) {
+
+        const tarefa = checkbox.closest(".tarefa");
+
+
+        if (checkbox.checked) {
+
+            tarefa.classList.add("concluida");
+
+        } else {
+
+            tarefa.classList.remove("concluida");
+
+        }
+
+    }
+
+    function atualizarMensagemVazia() {
+
+        const tarefas = document.querySelectorAll(".tarefa");
+
+
+        if (tarefas.length === 0) {
+
+            mensagemVazia.style.display = "block";
+
+        } else {
+
+            mensagemVazia.style.display = "none";
+
+        }
+
+    }
+
+    function limparFormulario() {
+
+        tituloInput.value = "";
+
+        descricaoInput.value = "";
+
+    }
+
+    function salvarTarefa() {
+
+    if (tarefaEditando === null) {
+        criarTarefa();
+    } else {
+        editarTarefas();
+    }
+
+}
+
+    modal.addEventListener("click", function(event) {
+
+        if (event.target === modal) {
+
+            fecharModal();
+
+        }
+
+    });
+
+    const nome = localStorage.getItem("nome")
+    document.getElementById("ola").textContent = "Olá, " + nome
+
+    atualizarMensagemVazia();
+
+</script>
+
+    <script src="./main.js"></script>
+
+</body>
+
+</html>

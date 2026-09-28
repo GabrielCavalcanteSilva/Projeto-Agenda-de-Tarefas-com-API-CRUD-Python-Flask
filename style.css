@@ -1,0 +1,110 @@
+```css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: linear-gradient(135deg, #111827, #1e3a8a);
+}
+
+#main-div {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    padding: 40px;
+
+    background: #ffffff;
+    border-radius: 16px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+#form::before {
+    content: "Criar conta";
+
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 14px 16px;
+
+    font-size: 15px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.input:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.input::placeholder {
+    color: #9ca3af;
+}
+
+button {
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+
+    #main-div {
+        padding: 15px;
+    }
+
+    #form {
+        padding: 30px 20px;
+    }
+}
+```
