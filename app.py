@@ -72,8 +72,6 @@ def logar():
 
     usuario = cursor.fetchone()
 
-    id = usuario[0]
-
     if usuario is None:
         return jsonify ({
             "erro": "usuario não encontrado"
