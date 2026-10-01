@@ -1,17 +1,31 @@
 from flask import Flask, jsonify, request
 import mysql.connector
 from flask_cors import CORS
+import time
 
 app = Flask(__name__)
 
 CORS(app)
 
-banco = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="191421",
-    database="usuarios"
-)
+def conectar_banco():
+
+    while True:
+
+        try:
+            banco = mysql.connector.connect(
+                host="mysql",
+                user="root",
+                password="191421",
+                database="usuarios"
+            )
+
+            return banco
+
+        except mysql.connector.Error as erro:
+
+            time.sleep(3)
+
+banco = conectar_banco()
 
 cursor = banco.cursor()
 
