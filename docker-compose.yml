@@ -1,0 +1,25 @@
+services:
+
+  api:
+    build: .
+    container_name: api-tarefas
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 191421
+      MYSQL_DATABASE: usuarios
+    ports:
+     - "3307:3306"
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p191421"]
+      interval: 5s
+      timeout: 5s
+      retries: 10    
